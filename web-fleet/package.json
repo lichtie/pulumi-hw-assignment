@@ -1,0 +1,13 @@
+{
+  "name": "web-fleet",
+  "description": "Create a web fleet on AWS",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "dependencies": {
+    "@pulumi/aws": "^6.68.0",
+    "@pulumi/pulumi": "^3.150.0"
+  }
+}

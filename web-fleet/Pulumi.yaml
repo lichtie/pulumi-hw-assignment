@@ -1,0 +1,10 @@
+name: web-fleet
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+description: Create a web fleet on AWS
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: https://www.pulumi.com/ai/api/project/4c5922cb-98f9-435e-aaf8-430fc0d73dcf.zip
