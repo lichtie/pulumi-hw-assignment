@@ -1,6 +1,6 @@
 interface OperatingSystem {
-    os: string,
-    size: string,
+    os: "ubuntu" | "amazonlinux",
+    size: "small" | "medium" | "large",
     count: Number
 }
 
