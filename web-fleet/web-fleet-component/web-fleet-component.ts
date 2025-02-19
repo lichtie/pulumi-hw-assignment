@@ -37,6 +37,9 @@ export class WebServerFleet extends pulumi.ComponentResource {
               instanceType: sizeMapping[os.size],
               ami: osMapping[os.os],
               subnetId: subnet,
+              userData: `sudo apt-get update
+sudo apt-get install nginx -y
+              `,
             }
           );
         }
