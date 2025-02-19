@@ -34,6 +34,37 @@ const publicRouteTableAssoc = new aws.ec2.RouteTableAssociation(
   }
 );
 
+const securityGroup = new aws.ec2.DefaultSecurityGroup("allow-me-to-access", {
+  vpcId: vpc.id,
+});
+
+const AllowUserAccess = new aws.vpc.SecurityGroupIngressRule(
+  "allow_user_access",
+  {
+    securityGroupId: securityGroup.id,
+    cidrIpv4: "71.34.12.166/32",
+    ipProtocol: "-1",
+  }
+);
+
+const AllowInternal = new aws.vpc.SecurityGroupIngressRule(
+  "allow_internal_access",
+  {
+    securityGroupId: securityGroup.id,
+    referencedSecurityGroupId: securityGroup.id,
+    ipProtocol: "-1",
+  }
+);
+
+const AllowOutbound = new aws.vpc.SecurityGroupEgressRule(
+  "allow_outbound_traffic",
+  {
+    securityGroupId: securityGroup.id,
+    ipProtocol: "-1",
+    cidrIpv4: "0.0.0.0/0",
+  }
+);
+
 // const subnet2 = new aws.ec2.Subnet("fleet-deployment-subnet-2", {
 //   vpcId: vpc.id,
 //   cidrBlock: "10.0.0.32/28",
