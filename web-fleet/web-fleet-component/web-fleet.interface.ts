@@ -1,3 +1,5 @@
+import { Output } from "@pulumi/pulumi";
+
 interface OperatingSystem {
   os: "ubuntu" | "amazonlinux";
   size: "small" | "medium" | "large";
@@ -5,6 +7,6 @@ interface OperatingSystem {
 }
 
 export interface WebServerFleetParameters {
-  subnets: string[];
+  subnets: (string | Output<string>)[];
   machines: OperatingSystem[];
 }

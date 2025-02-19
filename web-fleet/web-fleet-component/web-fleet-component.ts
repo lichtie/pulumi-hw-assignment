@@ -19,16 +19,20 @@ const osMapping = {
 ///////////////////////////////////
 
 export class WebServerFleet extends pulumi.ComponentResource {
-  constructor(name: string, args: WebServerFleetParameters) {
-    super("WebServerFleet", name, args);
+  constructor(
+    name: string,
+    args: WebServerFleetParameters,
+    opts?: pulumi.ComponentResourceOptions
+  ) {
+    super("WebServerFleet", name, args, opts);
 
-    for (const subnet of args.subnets) {
+    args.subnets.forEach((subnet, index) => {
       console.log(subnet);
 
       for (const os of args.machines) {
         for (let i = 0; i < os.count; i++) {
           const virtualMachine = new aws.ec2.Instance(
-            `${subnet}-${os.os}-${os.size}-${i}`,
+            `subnet-${index}-${os.os}-${os.size}-${i}`,
             {
               instanceType: sizeMapping[os.size],
               ami: osMapping[os.os],
@@ -37,6 +41,6 @@ export class WebServerFleet extends pulumi.ComponentResource {
           );
         }
       }
-    }
+    });
   }
 }
