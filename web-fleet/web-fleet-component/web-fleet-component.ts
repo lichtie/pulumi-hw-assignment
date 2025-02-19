@@ -16,6 +16,20 @@ const osMapping = {
   ubuntu: "ami-04b4f1a9cf54c11d0",
 };
 
+const userDataMapping = {
+  amazonlinux: `#!/bin/bash
+echo "Running userData script" > /var/log/user-data.log
+sudo yum update -y
+sudo yum install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+echo "NGINX Installation Complete" >> /var/log/user-data.log
+`,
+  ubuntu: `#!/bin/bash
+sudo apt-get update
+sudo apt-get install nginx -y`,
+};
+
 ///////////////////////////////////
 
 export class WebServerFleet extends pulumi.ComponentResource {
@@ -37,9 +51,7 @@ export class WebServerFleet extends pulumi.ComponentResource {
               instanceType: sizeMapping[os.size],
               ami: osMapping[os.os],
               subnetId: subnet,
-              userData: `#!/bin/bash
-sudo apt-get update
-sudo apt-get install nginx -y`,
+              userData: userDataMapping[os.os],
             }
           );
         }
