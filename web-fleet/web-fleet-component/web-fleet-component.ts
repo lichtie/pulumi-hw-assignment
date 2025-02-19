@@ -22,19 +22,17 @@ export class WebServerFleet extends pulumi.ComponentResource {
   constructor(name: string, args: WebServerFleetParameters) {
     super("WebServerFleet", name, args);
 
-    console.log(args.subnets);
     for (const subnet of args.subnets) {
       console.log(subnet);
 
       for (const os of args.machines) {
-        console.log(os);
-
         for (let i = 0; i < os.count; i++) {
           const virtualMachine = new aws.ec2.Instance(
             `${subnet}-${os.os}-${os.size}-${i}`,
             {
               instanceType: sizeMapping[os.size],
               ami: osMapping[os.os],
+              subnetId: subnet,
             }
           );
         }
