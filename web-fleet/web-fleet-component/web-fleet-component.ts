@@ -31,7 +31,7 @@ export class WebServerFleet extends pulumi.ComponentResource {
 
         for (let i = 0; i < os.count; i++) {
           const virtualMachine = new aws.ec2.Instance(
-            `${os.os}-${os.size}-${i}`,
+            `${subnet}-${os.os}-${os.size}-${i}`,
             {
               instanceType: sizeMapping[os.size],
               ami: osMapping[os.os],
