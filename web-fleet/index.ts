@@ -65,29 +65,26 @@ const AllowOutbound = new aws.vpc.SecurityGroupEgressRule(
   }
 );
 
-// const subnet2 = new aws.ec2.Subnet("fleet-deployment-subnet-2", {
-//   vpcId: vpc.id,
-//   cidrBlock: "10.0.0.32/28",
-//   availabilityZone: "us-east-1b",
-// mapPublicIpOnLaunch: true,
-// });
+const subnet2 = new aws.ec2.Subnet("fleet-deployment-subnet-2", {
+  vpcId: vpc.id,
+  cidrBlock: "10.0.0.32/28",
+  availabilityZone: "us-east-1b",
+  mapPublicIpOnLaunch: true,
+});
 
-//   const publicRouteTableAssoc2 = new aws.ec2.RouteTableAssociation(
-//     "fleet-rt-assoc2",
-//     {
-//       routeTableId: publicRouteTable1.id,
-//       subnetId: subnet2.id,
-//     }
-//   );
+const publicRouteTableAssoc2 = new aws.ec2.RouteTableAssociation(
+  "fleet-rt-assoc2",
+  {
+    routeTableId: publicRouteTable1.id,
+    subnetId: subnet2.id,
+  }
+);
 
 //**This is the sample input to test with */
 new WebServerFleet("Elisabeth-fleet", {
-  subnets: [
-    subnet1.id,
-    //subnet2.id
-  ],
+  subnets: [subnet1.id, subnet2.id],
   machines: [
-    { os: "ubuntu", size: "small", count: 1 },
-    //{ os: "amazonlinux", size: "medium", count: 2 },
+    { os: "ubuntu", size: "small", count: 3 },
+    { os: "amazonlinux", size: "medium", count: 2 },
   ],
 });
